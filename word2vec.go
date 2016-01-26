@@ -196,13 +196,13 @@ func (m *Model) Coses(pairs [][2]Expr) ([]float32, error) {
 }
 
 // Eval constructs a vector by evaluating the expression
-// vector.  Returns an error if a word is not in the model.
+// vector.  Ingores the word if its not in the model
 func (m *Model) Eval(expr Expr) (Vector, error) {
 	v := Vector(make([]float32, m.dim))
 	for w, c := range expr {
 		u, ok := m.words[w]
 		if !ok {
-			return nil, &NotFoundError{w}
+			continue
 		}
 		v.Add(c, u)
 	}
